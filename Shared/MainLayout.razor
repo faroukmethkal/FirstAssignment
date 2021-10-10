@@ -1,17 +1,50 @@
+@using Assignment_1.Authentication
 @inherits LayoutComponentBase
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    <CascadingValue Value="this">
+        <div class="main">
 
-    <div class="main">
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <div class="top-row px-4">
+                <div>
+                    <a href="/">Home</a>
+                </div>
+                <div>
+
+                    <AuthorizeView>
+                        <NotAuthorized>
+                            <a href="login">Login</a>
+                        </NotAuthorized>
+                        <Authorized>
+                            <a href="#" @onclick="PerformLogout">Logout</a>
+                        </Authorized>
+                    </AuthorizeView>
+                </div>
+
+
+            </div>
+            <div class="content px-4">
+                @Body
+            </div>
         </div>
 
-        <div class="content px-4">
-            @Body
-        </div>
-    </div>
+    </CascadingValue>
+
 </div>
+
+@code
+{
+    public async Task PerformLogout()
+    {
+        try
+        {
+            ((CustomAuthenticationStateProvider) AuthenticationStateProvider).Logout();
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception e)
+        {
+        }
+    }
+}

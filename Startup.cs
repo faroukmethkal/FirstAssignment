@@ -2,14 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Assignment_1.Authentication;
+using Assignment_1.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Assignment_1.Data;
 
 namespace Assignment_1
 {
@@ -28,7 +30,21 @@ namespace Assignment_1
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddScoped<IServerData, ServerData>();
+
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MustBeAdmin", a =>
+                {
+                    a.RequireAuthenticatedUser().RequireClaim("Role", "Admin");
+                });
+                options.AddPolicy("MustBeSocialHelper", a =>
+                {
+                    a.RequireAuthenticatedUser().RequireClaim("Role", "Social Helper");
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

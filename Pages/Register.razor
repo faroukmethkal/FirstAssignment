@@ -1,6 +1,126 @@
-﻿@page "/Register"
-<h3>Register</h3>
+﻿@page "/register"
+@using Assignment_1.Data
+@using Assignment_1.Models
+@using Microsoft.AspNetCore.Components
+@using Assignment_1.Authentication
+@inject IServerData ServerData
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavgMan
+<div class="main">
+
+    <EditForm Model="@newUser" OnValidSubmit="PerformRegister">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div class="form-Contanier">
+            <div class="header">
+                <span> Register </span>
+                <br/> <span class="error">@errorMessage</span>
+            </div>
+            <div class="form-field">
+                <div>
+                    <label > First Name </label>
+
+                </div>
+                <div>
+                    <input placeholder="First Name" @bind="@newUser.FirstName"/>
+
+                </div>
+
+            </div>
+            <div class="form-field">
+                <div>
+                    <label > Last Name </label>
+
+                </div>
+                <div>
+                    <input placeholder="Last name" @bind="@newUser.LastNAme"/>
+
+                </div>
+            </div>
+            <div class="form-field">
+                <div>
+                    <label class="username">
+                        <span class="oi oi-person"/> Username
+                    </label>
+                </div>
+                <div>
+                    <input placeholder="User Name" @bind="@newUser.Username"/>
+
+                </div>
+            </div>
+            <div class="form-field">
+                <div>
+                    <label class="password">
+                        <span class="oi oi-lock-locked"/> Password
+                    </label>
+                </div>
+                <div>
+                    <input type="password" placeholder="Password" @bind="@newUser.Password"/>
+                </div>
+            </div>
+            <div class="form-field">
+                <div>
+                    <label class="password"><span class="oi oi-role"/>Role</label>
+
+                </div >
+                <div class="roleSelector">
+                    <InputSelect style="width: 12rem; height: 2rem;     
+                     border: none;
+                     margin-left: 4.3rem;
+                        border-radius: 10px 10px 10px 10px;
+                        border-bottom: 1px solid #8d8a8a;
+                        box-shadow: 0px 10px 22px -7px rgba(94,118,217,1);
+
+                     " id="role" @bind-Value="newUser.Role">
+                        <option value="Admin">Admin</option>
+                        <option value="Social Helper">Social Helper</option>
+                    </InputSelect>
+                </div>
+
+            </div>
+                <div class="form-field footer">
+                    <div>
+                         <button class="btn btn-success" type="submit">Registe</button>
+                    </div>
+                    <div>
+                       <button class="btn btn-secondary" @onclick="@(() => NavgMan.NavigateTo("/"))">Cancel</button>  
+                    </div>
+                   
+                </div>
+            </div>
+        </EditForm>
+    
+
+</div>
+
 
 @code {
-    
+    private User newUser = new User();
+    private string errorMessage;
+    private string firstname;
+    private string lastname;
+    private string username;
+    private string password;
+    private string Role;
+
+    public async Task PerformRegister()
+    {
+        try
+        {
+            if (ServerData.RegisterNewUser(newUser) != null)
+            {
+                Console.WriteLine(newUser.Username + "-------" + newUser.Password);
+                ((CustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLogin(newUser.Username, newUser.Password);
+                NavgMan.NavigateTo("/");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            errorMessage = e.Message;
+        }
+    }
+
+}
+
 }

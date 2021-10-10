@@ -1,24 +1,49 @@
-﻿@if (IsExpanded)
+﻿@using Assignment_1.Models
+@if (IsExpanded)
 {
-    
-    <button class="btn btn-secondary" @onclick="() => IsExpanded = !IsExpanded">@Component <span class="oi oi-arrow-thick-top"/></button>
-    @ChildContent
+    <div class="rubberComponent">
+        <div class="expandedClass">
+
+            <div>
+                <button class="btn btn-secondary" @onclick="() => IsExpanded = !IsExpanded">
+                    @ComponentTitle <span class="oi oi-arrow-thick-top"/>
+                </button>
+            </div>
+            <div>
+                <AuthorizeView>
+                    <AddComponent ComponentTile="@ComponentTitle" FamilyId ="@Family.Id"/>
+                 </AuthorizeView>
+            </div>
+
+        </div>
+        <div class="activeChild">
+            @ChildContent
+        </div>
+
+    </div>
 }
 else
 {
-    <button class="btn btn-info" @onclick="() => IsExpanded = !IsExpanded">@Component <span class="oi oi-arrow-thick-bottom"/></button>
+    <button class="btn btn-info" @onclick="() => IsExpanded = !IsExpanded">
+        @ComponentTitle <span class="oi oi-arrow-thick-bottom"/>
+    </button>
 }
+
 @code {
-    
+    [Parameter]
+    public Family Family { get; set; }
+
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
     [Parameter]
-    public string Component { get; set; }
+    public string ComponentTitle { get; set; }
+
     public bool IsExpanded { get; set; }
 
-    
-    
-    
-    
+
+
+
+
 
 }

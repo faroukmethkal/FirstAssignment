@@ -1,0 +1,71 @@
+﻿.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.header{
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-left:8rem;
+    color: #3333a1;
+
+
+}
+.form-Contanier{
+    background: linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 50%, rgba(237,237,237,1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    width: 26rem;
+    height: 22rem;
+    box-shadow: 10px 3px 22px -9px rgba(0,0,0,0.75);
+    border: 1px solid #282e73;
+    border-radius: 24px 34px 24px 24px;
+    padding: 1rem;
+
+
+}
+
+.form-field{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.form-field label{
+    font-weight: 400;
+    font-size: 1.5rem;
+    font-color: #3b3b80;
+}
+
+.form-field input{
+    width: 12rem;
+    border: none;
+    border-radius: 10px 10px 10px 10px;
+    border-bottom: 1px solid #8d8a8a;
+    box-shadow: 0px 10px 22px -7px rgba(94,118,217,1);
+    height: 2rem;
+}
+.form-field input:focus{
+    outline: none;
+    border-bottom: 2px solid #8d8a8a;
+
+}
+
+.myStyle{
+    font-size: .9rem;
+    padding: 2px 5px;
+
+}
+.footer{
+    display: flex;
+    justify-content: space-around;
+}
+.error{
+    color: red;
+    font-weight: 200;
+    font-size: 1.2rem;
+}

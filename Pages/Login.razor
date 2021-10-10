@@ -1,6 +1,82 @@
-﻿@page "/Login"
-<h3>Login</h3>
+﻿@page "/login"
+
+@namespace LoginComponent
+
+@using Assignment_1.Data
+@using Assignment_1.Authentication
+@inject IServerData ServerData
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavgMan
+<div class="main">
+
+    <div class="form-Contanier">
+        <div class="header">
+            <span> Login </span>
+            <br/> <span class="error">@errorMessage</span>
+        </div>
+        <div class="form-field">
+            <div>
+                <label class="username">
+                    <span class="oi oi-person"/> Username
+                </label>
+            </div>
+            <div>
+                <input placeholder="User Name" @bind="@username"/>
+
+            </div>
+        </div>
+        <div class="form-field">
+            <div>
+                <label class="password">
+                    <span class="oi oi-lock-locked"/> Password
+                </label>
+            </div>
+            <div>
+                <input type="password" placeholder="Password" @bind="password"/>
+
+            </div>
+        </div>
+        <div class="form-field footer">
+            <div>
+                <button class="btn btn-success" type="submit" @onclick="PerformLogin">Login</button>
+            </div>
+            <div>
+                <button class="btn btn-secondary" @onclick="@(() => NavgMan.NavigateTo("/Register"))">Register</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<AuthorizeView>
+    <Authorized>
+        
+    </Authorized>
+</AuthorizeView>
+
 
 @code {
-    
+
+    [CascadingParameter]
+    public MainLayout Layout { get; set; }
+
+    private string username;
+    private string password;
+    private string errorMessage;
+
+    public async Task PerformLogin()
+    {
+        try
+        {
+            ((CustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLogin(username, password);
+            NavgMan.NavigateTo("/");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            errorMessage = e.Message;
+        }
+    }
+
 }

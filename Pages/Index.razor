@@ -1,7 +1,29 @@
 @page "/"
+@using Assignment_1.Data
+@using Assignment_1.Models
+@inject IServerData ServerData
 
-<h1>Hello, world!</h1>
+@if (families == null)
+{
+    <p>List is not exist </p>
+}else if (!families.Any())
+      {
+          <p>Loading..................</p>
+      }
+else
+{
+    @foreach (Family family in families)
 
-Welcome to your new app.
+    {
+        <FamilyDetails Family = "@family"/>
+    }
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code
+{
+    private IList<Family> families;
+    protected override async Task OnInitializedAsync()
+    {
+        families = ServerData.getAllFamily();
+    }
+}

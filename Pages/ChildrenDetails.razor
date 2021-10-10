@@ -1,5 +1,67 @@
-﻿<h3>ChildrenDetails</h3>
+﻿@using Assignment_1.Models
+<RubberComponent ComponentTitle="Children"  Family="@Family">
+    <AuthorizeView Policy="MustBeSocialHelper">
+        <Authorized>
+            
+            @if (Family.Children.Any())
+            {
+                <div class="container">
+                    <table class="table ">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Sex</th>
+                            <th scope="col">HaierColor</th>
+                            <th scope="col">EyeColor</th>
+                            <th scope="col">Weight</th>
+                            <th scope="col">Pets</th>
+           
+                            <th scope="col">Edit</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                        </thead>
+                        @foreach (Child child in Family.Children)
+                        {
+                            <tbody>
+                            <tr>
+                                <td>@child.FirstName @child.LastName</td>
+                                <td>@child.Age</td>
+                                <td>@child.Sex</td>
+                                <td>@child.HairColor</td>
+                                <td>@child.EyeColor</td>
+                                <td>@child.Weight</td>
+                                <td>
+                                    <PetDetails Pets="@child.Pets" ComponentTitle="Child Pets"></PetDetails>
+                                </td>
+           
+                                <td><span class="oi oi-pencil"/></td>
+                                <td><span class="oi oi-trash"/></td>
+                            </tr>
+                            </tbody>
+                        }
+                    </table>
+           
+                </div>
+            }
+            else
+            {
+                <span>No children</span>
+            } 
+        </Authorized>
+        <NotAuthorized>
+            <span> You must be social helper to view this page</span>
+        </NotAuthorized>
+      
+    </AuthorizeView>
+    
+
+
+</RubberComponent>
 
 @code {
-    
+
+    [Parameter]
+    public Family Family { get; set; }
+
 }

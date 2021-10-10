@@ -1,7 +1,7 @@
 ﻿namespace Assignment_1.Models
 {
-    public class Adult
+    public class Adult : Person
     {
-        
+        public Job JobTitle { get; set; }
     }
 }

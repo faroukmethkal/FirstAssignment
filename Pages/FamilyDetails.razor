@@ -1,5 +1,52 @@
-﻿<h3>Family</h3>
+﻿@using Assignment_1.Models
+
+<div class="myContainer">
+    <div>
+        <RubberComponent ComponentTitle="Family address"  Family="@Family">
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Street name</th>
+                    <th scope="col">House number</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Remove</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>@Family.StreetName</td>
+                    <td>@Family.HouseNumber</td>
+                    <td>
+                        <span class="oi oi-pencil"/>
+                    </td>
+                    <td>
+                        <span class="oi oi-trash"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </RubberComponent>
+    </div>
+
+    <div>
+        <AdultDetails Family="@Family"/>
+    </div>
+    <div>
+        <ChildrenDetails Family="@Family"/>
+    </div>
+    <div>
+        <PetDetails Pets="@Family.Pets" />
+    </div>
+
+</div>
+
 
 @code {
-    
+
+    [Parameter]
+    public Family Family { get; set; }
+
+
 }
