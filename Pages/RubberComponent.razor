@@ -1,0 +1,24 @@
+﻿@if (IsExpanded)
+{
+    
+    <button class="btn btn-secondary" @onclick="() => IsExpanded = !IsExpanded">@Component <span class="oi oi-arrow-thick-top"/></button>
+    @ChildContent
+}
+else
+{
+    <button class="btn btn-info" @onclick="() => IsExpanded = !IsExpanded">@Component <span class="oi oi-arrow-thick-bottom"/></button>
+}
+@code {
+    
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string Component { get; set; }
+    public bool IsExpanded { get; set; }
+
+    
+    
+    
+    
+
+}
